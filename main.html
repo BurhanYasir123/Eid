@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eid Mubarak</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            height: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            background: linear-gradient(45deg, #004450, #8a0060);
+            background-size: 200% 200%;
+            animation: backgroundAnimation 10s ease-in-out infinite;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .container {
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+            animation: fadeIn 2s ease-in-out;
+        }
+        /* Eid text moved further up */
+        .eid {
+            transform: translateY(-60px);
+        }
+        /* Only force Eid text to remain on one line */
+        .eid h1 {
+            white-space: nowrap;
+            margin: 0;
+            font-size: 3em;
+            background: linear-gradient(45deg, #7a6bff, #d352e4);
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.137);
+        }
+        /* Allow compliment to wrap into two lines */
+        .compliment {
+            font-size: 1.2em;
+            margin-top: 5px;
+            margin: 0;
+            background: linear-gradient(45deg, #776dd4, #d379df);
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.24);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Confetti styles */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            pointer-events: none;
+            animation: fall linear forwards;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.24);
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-300px) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(90vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="eid">
+            <h1>Eid Mubarak</h1>
+        </div>
+        <h5 class="compliment">Wishing you an amazing day<br>filled with joy!</h5>
+    </div>
+
+    <script>
+        // Function to generate a random number between min and max
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        
+        // Function to generate a confetti element
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            // Random position along the viewport width
+            confetti.style.left = random(0, window.innerWidth) + 'px';
+            confetti.style.top = '0';
+            // Random background color
+            confetti.style.backgroundColor = `hsl(${random(0, 360)}, 100%, 50%)`;
+            // Random size between 5px and 15px
+            const size = random(5, 15);
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+            // Set a random duration for the falling animation between 3s and 6s
+            const duration = random(3, 6);
+            confetti.style.animationDuration = duration + 's';
+            // Random delay so they don't all fall together
+            confetti.style.animationDelay = random(0, 2) + 's';
+            
+            // Append to the body and remove after animation ends
+            document.body.appendChild(confetti);
+            setTimeout(() => {
+                confetti.remove();
+            }, (duration + 2) * 1000);
+        }
+        
+        // Generate confetti periodically for a continuous effect
+        setInterval(createConfetti, 15);
+    </script>
+</body>
+</html>
